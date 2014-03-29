@@ -95,7 +95,7 @@
          port :port
          {:keys [ssl? ssl-port configurator max-threads daemon? reuse-addr?]
           :or {configurator identity
-               max-threads (max 50 (needed-pool-size))
+               max-threads (max 100 (needed-pool-size)) ;; This be 50, just seeing if this works on Travis CI
                reuse-addr? true}} :jetty-options} options
         thread-pool (QueuedThreadPool. ^Integer max-threads)
         server (Server. thread-pool)
