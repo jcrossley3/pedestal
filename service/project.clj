@@ -24,7 +24,9 @@
 
                  ;; interceptors
                  [ring/ring-core "1.2.2"
-                  :exclusions [[org.clojure/clojure]]]
+                  :exclusions [[org.clojure/clojure]
+                               [clj-time]]]
+                 [clj-time "0.6.0"]
                  [cheshire "5.3.1"]]
   :min-lein-version "2.0.0"
   :java-source-paths ["java"]
