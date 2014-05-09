@@ -12,17 +12,17 @@
 
 (defproject io.pedestal/pedestal.service-tools "0.3.0-SNAPSHOT"
   :description "Pedestal tools for service development"
-  :min-lein-version "2.0.0"
-  :dependencies [[io.pedestal/pedestal.service "0.3.0-SNAPSHOT"]
+  :plugins [[lein-modules "0.3.1"]]
+  :dependencies [[io.pedestal/pedestal.service "_"]
 
                  ;; Auto-reload changes
                  [ns-tracker "0.2.1"]
 
                  ;; Logging
-                 [ch.qos.logback/logback-classic "1.0.13" :exclusions [org.slf4j/slf4j-api]]
-                 [org.slf4j/jul-to-slf4j "1.7.2"]
-                 [org.slf4j/jcl-over-slf4j "1.7.2"]
-                 [org.slf4j/log4j-over-slf4j "1.7.2"]
+                 [ch.qos.logback/logback-classic "_" :exclusions [org.slf4j/slf4j-api]]
+                 [org.slf4j/jul-to-slf4j "_"]
+                 [org.slf4j/jcl-over-slf4j "_"]
+                 [org.slf4j/log4j-over-slf4j "_"]
 
-                 [javax.servlet/javax.servlet-api "3.0.1" :scope "test"]])
+                 [javax.servlet/javax.servlet-api :old-servlet :scope "test"]])
 

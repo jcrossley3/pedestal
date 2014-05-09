@@ -12,11 +12,11 @@
 
 (defproject io.pedestal/pedestal.tomcat "0.3.0-SNAPSHOT"
   :description "Embedded Tomcat adapter for Pedestal HTTP Service"
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.apache.tomcat.embed/tomcat-embed-logging-juli "8.0.5"]
-                 [org.apache.tomcat.embed/tomcat-embed-jasper "8.0.5"]
-                 [org.apache.tomcat.embed/tomcat-embed-core "8.0.5"]
-                 [javax.servlet/javax.servlet-api "3.1.0"]]
-  :min-lein-version "2.0.0"
+  :plugins [[lein-modules "0.3.1"]]
+  :dependencies [[org.clojure/clojure "_"]
+                 [org.apache.tomcat.embed/tomcat-embed-logging-juli "_"]
+                 [org.apache.tomcat.embed/tomcat-embed-jasper "_"]
+                 [org.apache.tomcat.embed/tomcat-embed-core "_"]
+                 [javax.servlet/javax.servlet-api :servlet]]
   :global-vars {*warn-on-reflection* true})
 

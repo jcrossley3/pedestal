@@ -12,6 +12,6 @@
 
 (defproject pedestal-service/lein-template "0.3.0-SNAPSHOT"
   :description "A Pedestal Service template."
-  :min-lein-version "2.0.0"
+  :plugins [[lein-modules "0.3.1"]]
   :eval-in-leiningen true
   :test-selectors {:travis (complement :not-travis)})

@@ -4,6 +4,6 @@ THIS_DIR=`dirname $0`
 
 # Needed for samples tests
 cd "$THIS_DIR/.."
-lein sub install
+lein modules install
 
-lein sub test
+lein modules test

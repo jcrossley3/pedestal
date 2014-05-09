@@ -62,7 +62,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details on contributing to Pedestal.
 ### Installing Libraries
 
 To install Pedestal library components in your local Maven repository run
-`lein sub install` from a local checkout of this repository.
+`lein modules install` from a local checkout of this repository.
 
 ---
 

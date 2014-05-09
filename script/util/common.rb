@@ -67,7 +67,7 @@ module Common
   end
 
   def clean!
-    unless system('lein sub clean')
+    unless system('lein modules clean')
       puts "Failed to clean project directories. Aborting."
       exit -1
     end
