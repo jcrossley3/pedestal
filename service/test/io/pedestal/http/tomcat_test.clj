@@ -5,7 +5,9 @@
             [clojure.edn]
             [io.pedestal.interceptor :as interceptor :refer [defhandler definterceptorfn handler]]
             [io.pedestal.http.servlet :as servlet]
-            [io.pedestal.http.impl.servlet-interceptor :as servlet-interceptor]))
+            [io.pedestal.http.servlet.filter :refer (filter->init)]
+            [io.pedestal.http.impl.servlet-interceptor :as servlet-interceptor])
+  (:import (org.eclipse.jetty.servlets GzipFilter)))
 
 (defhandler hello-world [request]
   {:status  200
@@ -33,7 +35,8 @@
 
 (defn tomcat-server
   [app options]
-  (server (servlet/servlet :service (servlet-interceptor/http-interceptor-service-fn [app]))
+  (server (servlet/servlet :service (servlet-interceptor/http-interceptor-service-fn [app])
+            :init (:init options))
           (assoc options :join? false)))
 
 (defmacro with-server [app options & body]
@@ -76,5 +79,25 @@
           (is (= (:scheme request-map) :http))
           (is (= (:server-name request-map) "localhost"))
           (is (= (:server-port request-map) 4349))
-          (is (= (:ssl-client-cert request-map) nil)))))))
+          (is (= (:ssl-client-cert request-map) nil))))))
+
+  (testing "A GZip Filter class"
+    (with-server hello-world {:port 4350 :init (filter->init {:filter GzipFilter})}
+      (let [response (http/get "http://localhost:4350")]
+        (is (= (:status response) 200))
+        (is (.startsWith ^String (get-in response [:headers "content-type"])
+              "text/plain"))
+        (is (.startsWith ^String (:orig-content-encoding response) "gzip"))
+        (is (= (:body response) "Hello World")))))
+  (testing "A GZip Filter instance"
+    (let [custom-gzip {:filter (GzipFilter.)
+                       :init-params {"mimeTypes" "text/javascript,text/plain"
+                                     "minGzipSize" "0"}}]
+      (with-server hello-world {:port 4351 :init (filter->init custom-gzip)}
+        (let [response (http/get "http://localhost:4351")]
+          (is (= (:status response) 200))
+          (is (.startsWith ^String (get-in response [:headers "content-type"])
+                "text/plain"))
+          (is (.startsWith ^String (:orig-content-encoding response) "gzip"))
+          (is (= (:body response) "Hello World")))))))
 
